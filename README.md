@@ -1,6 +1,9 @@
 steven was here :)
 laurenne was here :)
 ariana was here :) 
+
+I just made a test change, please review
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
