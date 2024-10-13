@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
 
 import Comment from "./Comment"
+import Ranking from "./Ranking"
+
 
 export default function SoftwareTool (props) {
-    const {id, name, upvotes, desc} = props
+    const {id, name, upvotes, desc, onUpdateUpvotes} = props
     const [comments, setComments] = useState([])
 
 
@@ -46,6 +48,8 @@ export default function SoftwareTool (props) {
             <h3>{name}</h3>
             <p>{desc}</p>
             <p>Upvotes: {upvotes}</p>
+
+            <Ranking id={id} name={name} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
             <div>
                 <h4>Comments:</h4>
                 <ul>{commentComponentArray}</ul>
