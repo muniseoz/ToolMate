@@ -37,7 +37,7 @@ export default function Comment (props) {
     useEffect(() => {
         getReplies(id)
     }, [])
-    // Update upvotes for a specific software tool
+    // Update upvotes for a specific  tool
     const updateUpvotes = (id, change) => {
         setReplies((prevReplies) =>
             prevReplies.map((reply) =>
@@ -47,7 +47,7 @@ export default function Comment (props) {
             )
         );
     };
-
+    
     const commentComponentArray = replies.map((reply) => (
         <Comment 
             key={reply.id} 
