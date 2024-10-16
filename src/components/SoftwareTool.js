@@ -38,9 +38,17 @@ export default function SoftwareTool (props) {
     useEffect(() => {
         getComments(id)
     }, [])
-
+    const updateUpvotes = (id, change) => {
+        setComments((prevComment) =>
+            prevComment.map((comment) =>
+                comment.id === id
+                    ? { ...comment, upvotes: comment.upvotes + change }
+                    : comment
+            )
+        );
+    };
     const commentComponentArray = comments.map((comment) => (
-        <Comment key={comment.id} comment={comment.comment} id={comment.id} upvotes={comment.upvotes} />
+        <Comment key={comment.id} comment={comment.comment} id={comment.id} upvotes={comment.upvotes} onUpdateUpvotes={updateUpvotes}/>
     ))
 
     return (

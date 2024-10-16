@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
+import Ranking from "./Ranking"
 
 export default function Comment (props) {
-    const {id, comment, upvotes} = props
+    const {id, comment, upvotes, onUpdateUpvotes} = props
 
 
     const [replies, setReplies] = useState([])
@@ -36,15 +37,33 @@ export default function Comment (props) {
     useEffect(() => {
         getReplies(id)
     }, [])
+    // Update upvotes for a specific software tool
+    const updateUpvotes = (id, change) => {
+        setReplies((prevReplies) =>
+            prevReplies.map((reply) =>
+                reply.id === id
+                    ? { ...reply, upvotes: reply.upvotes + change }
+                    : reply
+            )
+        );
+    };
 
     const commentComponentArray = replies.map((reply) => (
-        <Comment key={reply.id} comment={reply.reply} id={reply.id} upvotes={reply.upvotes} />
+        <Comment 
+            key={reply.id} 
+            comment={reply.reply} 
+            id={reply.id} 
+            upvotes={reply.upvotes} 
+            onUpdateUpvotes={updateUpvotes} 
+        />
+
     ))
     return (
         <li>
         <div>
             <p>{comment}</p>
             <p>Upvotes: {upvotes}</p>
+            <Ranking id={id} name={comment} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
             {replies.length !== 0 && 
             <>
                 <p>Replies:</p>
