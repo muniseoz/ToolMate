@@ -1,43 +1,42 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
-import Comment from "./Comment"
-import Ranking from "./Ranking"
+import Comment from "./Comment";
+import Ranking from "./Ranking";
+
+import { db } from '../config/firebase';
+import { collection, doc, getDocs } from "firebase/firestore";
 
 
 export default function SoftwareTool (props) {
-    const {id, name, upvotes, desc, onUpdateUpvotes} = props
-    const [comments, setComments] = useState([])
+    const {id, name, upvotes, desc, onUpdateUpvotes, path} = props;
+    const [comments, setComments] = useState([]);
 
+    // Gets the commments from the softwareTool's subcollection in Firebase
+    // Sets comments to an array of objects with the fields as the keys
+    const getComments = async () => {
+        try {
+            // Using the path prop, gets the comment documents from the comments subcollection of the softwareTool
+            const commentsRef = await getDocs(collection(db, path, "comments"));
+            
+            const filteredComments = commentsRef.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id,
+                path: doc.ref.path
+            }));
 
-    // function to get the comments given the id of the software tool
-    // in firebase langauge: 
-    //      get software tool document using id
-    //      get the documents inside the comments  subcollection of found document IN RATING ORDER
-    const getComments = async (id) => {
-        
-        let commentsArray = []
-        if (id === "exampleID") {
-            commentsArray = [
-                {
-                    id: "commentID",
-                    comment: "This is an example comment",
-                    upvotes: 6,
-                },
+            setComments(filteredComments);
     
-                {
-                    id: "commentID2",
-                    comment: "This is another example comment",
-                    upvotes: 2,
-                }
-            ]
+        } catch (err) {
+            console.error(err);
         }
-        setComments(commentsArray)
+
     }
 
     // Runs every time page is reloaded, updates comments
     useEffect(() => {
-        getComments(id)
+        getComments();
     }, [])
+
     const updateUpvotes = (id, change) => {
         setComments((prevComment) =>
             prevComment.map((comment) =>
@@ -47,9 +46,10 @@ export default function SoftwareTool (props) {
             )
         );
     };
+
     const commentComponentArray = comments.map((comment) => (
-        <Comment key={comment.id} comment={comment.comment} id={comment.id} upvotes={comment.upvotes} onUpdateUpvotes={updateUpvotes}/>
-    ))
+        <Comment key={comment.id} comment={comment.comment} id={comment.id} upvotes={comment.upvotes} onUpdateUpvotes={updateUpvotes} path={comment.path}/>
+    ));
 
     return (
         <div>
