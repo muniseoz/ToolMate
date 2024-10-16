@@ -7,3 +7,23 @@ div {
 p {
     font-family: "JetBrains Mono", monospace;
 }
+body{
+    background-color: #e1eedd;
+}
+h3{
+    color: #F0A04B;
+}
+.software-tools{
+    padding-left: 30%;
+    padding-right: 30%;
+}
+.software-tool-element{
+    background-color: #fffaea;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 15px;
+}
+button.increment-button{
+    background-color: #fffdf3;
+    border-radius: 5px;
+}

@@ -46,7 +46,7 @@ export default function Course(props) {
 
     // Reformats softwareTools into an array of SoftwareTool components
     const softwareToolComponentArray = softwareTools.map((softwareTool) => (
-        <div key={softwareTool.id}>
+        <div key={softwareTool.id} className='software-tool-element'>
             <SoftwareTool
                 name={softwareTool.name}
                 id={softwareTool.id}
@@ -58,12 +58,12 @@ export default function Course(props) {
     ));
 
     return (
-        <div>
+        <div className='software-tools'>
             <h1>{name}</h1>
             <p>{desc}</p>
             <div>
                 <h2>Software Tools:</h2>
-                <div>
+                <div className='software-tools-array'>
                     {softwareToolComponentArray}
                 </div>
             </div>
