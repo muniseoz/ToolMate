@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { db } from '../config/firebase';
 import Ranking from "./Ranking"
 
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc } from "firebase/firestore";
 
 export default function Comment (props) {
     // NOTE: Currently, it is set to recursively find all replies including replies of replies,
@@ -15,7 +15,7 @@ export default function Comment (props) {
     // Sets replies to an array of objects with the fields as the keys
     const getReplies = async () => {
         try {
-            const repliesRef = await getDocs(collection(db, path, "replies"));
+            const repliesRef = await getDocs(query(collection(db, path, "replies"), orderBy("upvotes", "desc")));
             
             const filteredReplies = repliesRef.docs.map((doc) => ({
                 ...doc.data(),
@@ -34,15 +34,17 @@ export default function Comment (props) {
     useEffect(() => {
         getReplies()
     }, [])
-    // Update upvotes for a specific  tool
-    const updateUpvotes = (id, change) => {
-        setReplies((prevReplies) =>
-            prevReplies.map((reply) =>
-                reply.id === id
-                    ? { ...reply, upvotes: reply.upvotes + change }
-                    : reply
-            )
-        );
+    
+    // Update upvotes for a reply
+    const updateUpvotes = async (path, change) => {
+        // Get document to update using path (easiest way)
+        const replyRef = doc(db, path);
+        const replyUpvotes = (await getDoc(replyRef)).data().upvotes;
+
+        await updateDoc(replyRef, {upvotes: replyUpvotes+change});
+
+        // Refresh page with the change
+        getReplies();
     };
     
     const commentComponentArray = replies.map((reply) => (
@@ -61,7 +63,7 @@ export default function Comment (props) {
         <div>
             <p>{comment}</p>
             <p>Upvotes: {upvotes}</p>
-            <Ranking id={id} name={comment} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
+            <Ranking id={id} path={path} name={comment} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
             {replies.length !== 0 && 
             <>
                 <p>Replies:</p>

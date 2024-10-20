@@ -4,7 +4,7 @@ import Comment from "./Comment";
 import Ranking from "./Ranking";
 
 import { db } from '../config/firebase';
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc } from "firebase/firestore";
 
 
 export default function SoftwareTool (props) {
@@ -16,7 +16,7 @@ export default function SoftwareTool (props) {
     const getComments = async () => {
         try {
             // Using the path prop, gets the comment documents from the comments subcollection of the softwareTool
-            const commentsRef = await getDocs(collection(db, path, "comments"));
+            const commentsRef = await getDocs(query(collection(db, path, "comments"), orderBy("upvotes", "desc")));
             
             const filteredComments = commentsRef.docs.map((doc) => ({
                 ...doc.data(),
@@ -37,14 +37,16 @@ export default function SoftwareTool (props) {
         getComments();
     }, [])
 
-    const updateUpvotes = (id, change) => {
-        setComments((prevComment) =>
-            prevComment.map((comment) =>
-                comment.id === id
-                    ? { ...comment, upvotes: comment.upvotes + change }
-                    : comment
-            )
-        );
+    // Updates upvotes for Comments
+    const updateUpvotes = async (path, change) => {
+        // Get document to update using path (easiest way)
+        const commentRef = doc(db, path);
+        const commentUpvotes = (await getDoc(commentRef)).data().upvotes;
+        // updateDoc(doc, {upvotes: })
+        await updateDoc(commentRef, {upvotes: commentUpvotes+change});
+
+        // Refresh page with the change
+        getComments();
     };
 
     const commentComponentArray = comments.map((comment) => (
@@ -57,7 +59,7 @@ export default function SoftwareTool (props) {
             <p>{desc}</p>
             <p>Upvotes: {upvotes}</p>
 
-            <Ranking id={id} name={name} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
+            <Ranking id={id} path={path} name={name} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
             <div>
                 <h4>Comments:</h4>
                 <ul>{commentComponentArray}</ul>

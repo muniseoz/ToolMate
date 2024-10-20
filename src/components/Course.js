@@ -3,7 +3,7 @@ import './Course.css';
 import SoftwareTool from './SoftwareTool';
 
 import { db } from '../config/firebase';
-import { collection, getDocs, getDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, getDoc, query, where, orderBy, doc, updateDoc } from 'firebase/firestore';
 
 export default function Course(props) {
     const { name, desc } = props;
@@ -20,7 +20,7 @@ export default function Course(props) {
             const thisCourseID = thisCourseSnapshot.docs.length > 0 ? thisCourseSnapshot.docs[0].id : 0;
            
             // Gets the softwareTool docs from the subcollection of the current course document
-            const softwareToolsSnapshot = await getDocs(collection(db, "courses", thisCourseID, "softwareTools"));
+            const softwareToolsSnapshot = await getDocs(query(collection(db, "courses", thisCourseID, "softwareTools"), orderBy("upvotes", "desc")));
 
             // Maps out the data into the array format we desire
             // Path is passed as a prop to aid later components in data retreival
@@ -37,14 +37,14 @@ export default function Course(props) {
     };
 
     // Update upvotes for a specific software tool
-    const updateUpvotes = (id, change) => {
-        setSoftwareTools((prevTools) =>
-            prevTools.map((tool) =>
-                tool.id === id
-                    ? { ...tool, upvotes: tool.upvotes + change }
-                    : tool
-            )
-        );
+    const updateUpvotes = async (path, change) => {
+        // Get document to update using path (easiest way)
+        const softwareToolRef = doc(db, path);
+        const softwareToolUpvotes = (await getDoc(softwareToolRef)).data().upvotes;
+        // updateDoc(doc, {upvotes: })
+        await updateDoc(softwareToolRef, {upvotes: softwareToolUpvotes+change});
+
+        getSoftwareTools();
     };
 
     // Runs when the component is loaded
