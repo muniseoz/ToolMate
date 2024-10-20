@@ -4,7 +4,7 @@ import Comment from "./Comment";
 import Ranking from "./Ranking";
 
 import { db } from '../config/firebase';
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, orderBy, query } from "firebase/firestore";
 
 
 export default function SoftwareTool (props) {
@@ -16,7 +16,7 @@ export default function SoftwareTool (props) {
     const getComments = async () => {
         try {
             // Using the path prop, gets the comment documents from the comments subcollection of the softwareTool
-            const commentsRef = await getDocs(collection(db, path, "comments"));
+            const commentsRef = await getDocs(query(collection(db, path, "comments"), orderBy("upvotes", "desc")));
             
             const filteredComments = commentsRef.docs.map((doc) => ({
                 ...doc.data(),

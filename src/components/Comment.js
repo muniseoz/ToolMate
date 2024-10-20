@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { db } from '../config/firebase';
 import Ranking from "./Ranking"
 
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, orderBy, query } from "firebase/firestore";
 
 export default function Comment (props) {
     // NOTE: Currently, it is set to recursively find all replies including replies of replies,
@@ -15,7 +15,7 @@ export default function Comment (props) {
     // Sets replies to an array of objects with the fields as the keys
     const getReplies = async () => {
         try {
-            const repliesRef = await getDocs(collection(db, path, "replies"));
+            const repliesRef = await getDocs(query(collection(db, path, "replies"), orderBy("upvotes", "desc")));
             
             const filteredReplies = repliesRef.docs.map((doc) => ({
                 ...doc.data(),
