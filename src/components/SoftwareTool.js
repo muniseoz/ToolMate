@@ -53,6 +53,7 @@ export default function SoftwareTool (props) {
         <Comment key={comment.id} comment={comment.comment} id={comment.id} upvotes={comment.upvotes} onUpdateUpvotes={updateUpvotes} path={comment.path}/>
     ));
 
+    console.log(desc);
     return (
         <div>
             <h3>{name}</h3>
