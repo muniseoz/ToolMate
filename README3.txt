@@ -1,3 +1,3 @@
-The is no testing script to test the websites basic features. 
-The only way to test it is to interact with the website. 
-Please see README2.txt for exapmles of test cases.
+Please see App.test.js
+
+If you run npm test within the project folder it will run some tests.
