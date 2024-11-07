@@ -39,25 +39,6 @@
   }
 }
 */
-/* App.css */
-/* App.css */
-.app-container {
-  display: flex;
-}
-
-.sidebar {
-  width: 200px;
-  background-color: #f4f4f4;
-  padding: 20px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  overflow-y: auto;
-}
-
-.main-content {
-  margin-left: 220px; /* Adjust according to sidebar width */
-  padding: 20px;
-  flex-grow: 1;
+h2{
+  text-align: center;
 }

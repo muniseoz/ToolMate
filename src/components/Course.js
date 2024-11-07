@@ -10,20 +10,21 @@ export default function Course(props) {
 
     // Initializes a state for an array of softwareTools (formatted as objects)
     const [softwareTools, setSoftwareTools] = useState([]);
-    //const [courseDocID, setCourseDocID] = useState(0);
 
-    // Gets list of software tools from Firebase and sets softwareTools to an array of objects with the fields from firebase
+    // Fetches the list of software tools from Firebase and sets `softwareTools` state
     const getSoftwareTools = async () => {
         try {
-            // Gets the the course that matches the name passed as prop and keeps the id
+            // Clear previous tools when a new course is selected
+            setSoftwareTools([]);
+
+            // Get the course document that matches the `name` prop
             const thisCourseSnapshot = await getDocs(query(collection(db, "courses"), where("name", "==", name)));
             const thisCourseID = thisCourseSnapshot.docs.length > 0 ? thisCourseSnapshot.docs[0].id : 0;
-           
-            // Gets the softwareTool docs from the subcollection of the current course document
+
+            // Get software tools from the subcollection of the selected course
             const softwareToolsSnapshot = await getDocs(query(collection(db, "courses", thisCourseID, "softwareTools"), orderBy("upvotes", "desc")));
 
-            // Maps out the data into the array format we desire
-            // Path is passed as a prop to aid later components in data retreival
+            // Map the documents to an array format
             const filteredSoftwareToolsArray = softwareToolsSnapshot.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
@@ -32,25 +33,23 @@ export default function Course(props) {
 
             setSoftwareTools(filteredSoftwareToolsArray);
         } catch (err) {
-            console.error(err);
+            console.error("Error fetching software tools:", err);
         }
     };
 
     // Update upvotes for a specific software tool
     const updateUpvotes = async (path, change) => {
-        // Get document to update using path (easiest way)
         const softwareToolRef = doc(db, path);
         const softwareToolUpvotes = (await getDoc(softwareToolRef)).data().upvotes;
-        // updateDoc(doc, {upvotes: })
-        await updateDoc(softwareToolRef, {upvotes: softwareToolUpvotes+change});
+        await updateDoc(softwareToolRef, { upvotes: softwareToolUpvotes + change });
 
         getSoftwareTools();
     };
 
-    // Runs when the component is loaded
+    // Runs whenever the component is loaded or the `name` prop changes
     useEffect(() => {
         getSoftwareTools();
-    }, []);
+    }, [name]); // <--- Added `name` as a dependency
 
     // Reformats softwareTools into an array of SoftwareTool components
     const softwareToolComponentArray = softwareTools.map((softwareTool) => (
@@ -60,7 +59,7 @@ export default function Course(props) {
                 id={softwareTool.id}
                 upvotes={softwareTool.upvotes}
                 desc={softwareTool.desc}
-                onUpdateUpvotes={updateUpvotes} // Passing the updateUpvotes function
+                onUpdateUpvotes={updateUpvotes}
                 path={softwareTool.path}
             />
         </div>
