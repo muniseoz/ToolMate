@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/SideBar';
 import Course from './components/Course';
 import './App.css';
+import { db } from './config/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function App() {
     const [courses, setCourses] = useState([]);
@@ -10,10 +12,14 @@ export default function App() {
 
     useEffect(() => {
         // Fetch courses from Firebase and set them in state
-        // Example: Assume `fetchCourses` gets courses data from Firebase
         const fetchCourses = async () => {
-            // Your Firebase fetching logic here
-            // setCourses(fetchedCourses);
+            const coursesCollection = collection(db, "courses");
+            const courseSnapshot = await getDocs(coursesCollection);
+            const courseList = courseSnapshot.docs.map((doc) => ({
+                id: doc.id, // Get document ID
+                ...doc.data(), // Get document data
+            }));
+            setCourses(courseList);
         };
         fetchCourses();
     }, []);
@@ -27,7 +33,11 @@ export default function App() {
             <Sidebar courses={courses} onSelectCourse={handleSelectCourse} />
             <div className="main-content">
                 {selectedCourse ? (
-                    <Course name={selectedCourse.name} desc={selectedCourse.desc} />
+                    <Course 
+                        id={selectedCourse.id} // Pass the document ID as `id`
+                        name={selectedCourse.name}
+                        desc={selectedCourse.desc}
+                    />
                 ) : (
                     <h2>Select a course to view details</h2>
                 )}

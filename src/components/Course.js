@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Course.css';
 import SoftwareTool from './SoftwareTool';
+import CreatePost from './CreatePost';
 
 import { db } from '../config/firebase';
 import { collection, getDocs, getDoc, query, where, orderBy, doc, updateDoc } from 'firebase/firestore';
 
 export default function Course(props) {
-    const { name, desc } = props;
+    const { name, desc, id } = props;
 
     // Initializes a state for an array of softwareTools (formatted as objects)
     const [softwareTools, setSoftwareTools] = useState([]);
@@ -36,7 +37,7 @@ export default function Course(props) {
             console.error("Error fetching software tools:", err);
         }
     };
-
+    
     // Update upvotes for a specific software tool
     const updateUpvotes = async (path, change) => {
         const softwareToolRef = doc(db, path);
@@ -45,7 +46,9 @@ export default function Course(props) {
 
         getSoftwareTools();
     };
-
+    const refreshTools = () => {
+        getSoftwareTools();
+    };
     // Runs whenever the component is loaded or the `name` prop changes
     useEffect(() => {
         getSoftwareTools();
@@ -69,6 +72,7 @@ export default function Course(props) {
         <div className='software-tools'>
             <h1>{name}</h1>
             <p>{desc}</p>
+            <CreatePost courseId={id} onPostCreated={refreshTools} />
             <div>
                 <h2>Software Tools:</h2>
                 <div className='software-tools-array'>
