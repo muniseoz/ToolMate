@@ -1,6 +1,33 @@
-.form-container {
+.form-container form {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-  }
-  
+    width: 100%;
+}
+.desc{
+    height: 150px;
+}
+.name{
+    height: 30px;
+}
+input{
+    width: 100%;
+    margin: 10px;
+    text-align: start;
+    color: #F0A04B;
+    font-weight: bold;
+}
+input::placeholder {
+    color: #F0A04B;
+    opacity: 1; /* Optional: Make the placeholder fully opaque */
+    font-weight: bold;
+}
+button{
+    background: #F0A04B;
+    color: white;
+    width: 150px;         /* Adjust the width to make it larger */
+    height: 50px;         /* Adjust the height to make it taller */
+    font-size: 20px;      /* Increase font size for larger text */
+    padding: 10px 20px; 
+}
+

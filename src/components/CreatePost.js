@@ -46,14 +46,6 @@ export default function CreatePost({ courseId, onPostCreated }) {
                 placeholder="Description"
                 required
             />
-            <input
-                className='link'
-                type="url"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-                placeholder="Link"
-                required
-            />
             <button type="submit" className='submit-button'>Create Post</button>
         </form>
         </div>
