@@ -1,7 +1,7 @@
 /* Sidebar.css */
 .sidebar {
     width: 200px; /* Fixed width for the sidebar */
-    background-color: #f4f4f4;
+    background-color: #f0a04c;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     height: 100vh; /* Full height of the viewport */
@@ -9,6 +9,7 @@
     top: 0;
     left: 0;
     overflow-y: auto;
+    color: white;
 }
 
 .sidebar h2 {
@@ -23,8 +24,13 @@
 .sidebar ul li {
     padding: 10px;
     cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
 }
 
 .sidebar ul li:hover {
-    background-color: #ddd;
+    background-color: white;
+    color: #f0a04c;
+    border-radius: 15px;
 }
