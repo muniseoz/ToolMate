@@ -4,12 +4,13 @@ import Comment from "./Comment";
 import Ranking from "./Ranking";
 
 import { db } from '../config/firebase';
-import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc, addDoc, serverTimestamp} from "firebase/firestore";
 
 
 export default function SoftwareTool (props) {
     const {id, name, upvotes, desc, onUpdateUpvotes, path} = props;
     const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState("");
 
     // Gets the commments from the softwareTool's subcollection in Firebase
     // Sets comments to an array of objects with the fields as the keys
@@ -31,6 +32,23 @@ export default function SoftwareTool (props) {
         }
 
     }
+    // Add a new comment to Firestore
+    const addComment = async () => {
+        if (!newComment.trim()) return; // Avoid adding empty comments
+
+        try {
+            const commentsRef = collection(db, path, "comments");
+            await addDoc(commentsRef, {
+                comment: newComment.trim(),
+                upvotes: 0, // Default upvotes for a new comment
+                timestamp: serverTimestamp(), // For ordering comments by time
+            });
+            setNewComment(""); // Clear the input field
+            getComments(); // Refresh the comments list
+        } catch (err) {
+            console.error("Error adding comment:", err);
+        }
+    };
 
     // Runs every time page is reloaded, updates comments
     useEffect(() => {
@@ -62,8 +80,17 @@ export default function SoftwareTool (props) {
             <Ranking id={id} path={path} name={name} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
             <div>
                 <h4>Comments:</h4>
+                <div className="create-comment">
+                <textarea
+                    placeholder="Write a comment..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    rows={3}
+                    className="comment-textarea"
+                />
+                <button onClick={addComment}>Submit</button>
+                </div>
                 <ul>{commentComponentArray}</ul>
-                
             </div>
         </div>
     )
