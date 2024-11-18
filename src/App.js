@@ -39,7 +39,7 @@ export default function App() {
                         desc={selectedCourse.desc}
                     />
                 ) : (
-                    <h2>Select a course to view details</h2>
+                    <h2 className='select-prompt'>Select a course to view details</h2>
                 )}
             </div>
         </div>

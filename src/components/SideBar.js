@@ -25,6 +25,7 @@ export default function Sidebar({ onSelectCourse }) {
 
     return (
         <div className="sidebar">
+            <img src='/UTDallas_logo.png'></img>
             <h2>Courses</h2>
             <ul>
                 {courses.map((course) => (
