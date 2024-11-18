@@ -13,9 +13,13 @@ body{
 h3{
     color: #F0A04B;
 }
+p{
+    color: #184733;
+}
 .software-tools{
-    padding-left: 30%;
-    padding-right: 30%;
+    margin-left: 200px;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 .software-tool-element{
     background-color: #fffaea;
@@ -26,6 +30,32 @@ h3{
 .software-tool-element h4 {
     color: #F0A04B;
 }
+.software-tool-element p {
+    overflow: scroll;
+}
 button.increment-button{
     border-radius: 5px;
+    background-color: #f0a04c;
+}
+.create-comment{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+
+}
+.create-comment button {
+    background-color: #F0A04B;
+    color: white;
+    font-weight: 600;
+    height: 40px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+.comment-textarea{
+    width: 100%;
+}
+ul {
+    list-style-type: none;
+    padding: 0%;
 }
