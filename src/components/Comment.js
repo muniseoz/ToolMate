@@ -4,7 +4,7 @@ import Markdown from "react-markdown";
 import Ranking from "./Ranking"
 import './Comment.css';
 
-import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, updateDoc, serverTimestamp } from "firebase/firestore";
 
 export default function Comment (props) {
     // NOTE: Currently, it is set to recursively find all replies including replies of replies,
@@ -13,6 +13,9 @@ export default function Comment (props) {
     const {id, comment, upvotes, onUpdateUpvotes, path} = props
     const [replies, setReplies] = useState([])
     const [showReplies, setShowReplies] = useState(false)
+    const [newComment, setNewComment] = useState("");
+    const [showCreateReply, setShowCreateReply] = useState(false)
+
 
     // Gets the replies from the comment's subcollection in Firebase
     // Sets replies to an array of objects with the fields as the keys
@@ -49,6 +52,25 @@ export default function Comment (props) {
         // Refresh page with the change
         getReplies();
     };
+
+    // Add a new reply to Firestore
+    const addReply = async () => {
+        if (!newComment.trim()) return; // Avoid adding empty comments
+
+        try {
+            const commentsRef = collection(db, path, "replies");
+            await addDoc(commentsRef, {
+                reply: newComment.trim(),
+                upvotes: 0, // Default upvotes for a new comment
+                timestamp: serverTimestamp(), // For ordering comments by time
+            });
+            setNewComment(""); // Clear the input field
+            setShowCreateReply(false); // hide the input for replies
+            getReplies(); // Refresh the comments list
+        } catch (err) {
+            console.error("Error adding reply:", err);
+        }
+    };
     
     const commentComponentArray = replies.map((reply) => (
         <Comment 
@@ -66,7 +88,23 @@ export default function Comment (props) {
         <div className="comment-container">
             <Markdown className="comment">{comment}</Markdown>
             <p>Upvotes: {upvotes}</p>
-            <Ranking id={id} path={path} name={comment} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
+            <div className="comment-buttons">
+                <Ranking id={id} path={path} name={comment} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
+                <button  href="" onClick={(e) => {e.preventDefault(); setShowCreateReply((prev) => !prev)}} className="reply-button">Create Reply</button>
+            </div>
+            
+            { showCreateReply &&
+            <div className="create-reply">
+                <textarea
+                    placeholder="Write a reply..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    rows={3}
+                    className="comment-textarea"
+                />
+                <button onClick={addReply}>Submit</button>
+            </div>
+            }
             {replies.length !== 0 && 
             <>
                 <p><a className="replies" href="" onClick={(e) => {e.preventDefault(); setShowReplies((prev) => !prev)}}>Replies{showReplies ? ':' : '(V)'}</a></p>
