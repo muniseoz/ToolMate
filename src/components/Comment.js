@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { db } from '../config/firebase';
+import Markdown from "react-markdown";
 import Ranking from "./Ranking"
+import './Comment.css';
 
 import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc } from "firebase/firestore";
 
@@ -10,6 +12,7 @@ export default function Comment (props) {
 
     const {id, comment, upvotes, onUpdateUpvotes, path} = props
     const [replies, setReplies] = useState([])
+    const [showReplies, setShowReplies] = useState(false)
 
     // Gets the replies from the comment's subcollection in Firebase
     // Sets replies to an array of objects with the fields as the keys
@@ -60,16 +63,18 @@ export default function Comment (props) {
     ))
     return (
         <li>
-        <div>
-            <p>{comment}</p>
+        <div className="comment-container">
+            <Markdown className="comment">{comment}</Markdown>
             <p>Upvotes: {upvotes}</p>
             <Ranking id={id} path={path} name={comment} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
             {replies.length !== 0 && 
             <>
-                <p>Replies:</p>
+                <p><a className="replies" href="" onClick={(e) => {e.preventDefault(); setShowReplies((prev) => !prev)}}>Replies{showReplies ? ':' : '(V)'}</a></p>
+                {showReplies &&
                 <div style={{marginLeft: "25px"}}>
                     {commentComponentArray}
                 </div>
+                }
             </>
             }
         </div>

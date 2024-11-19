@@ -1,0 +1,16 @@
+.comment-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+
+.replies {
+    color: #F0A04B;
+    font-weight: 500;
+}
+
+.comment img {
+    max-width: 20%;
+}
