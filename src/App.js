@@ -39,7 +39,11 @@ export default function App() {
                         desc={selectedCourse.desc}
                     />
                 ) : (
-                    <h2>Select a course to view details</h2>
+                    <div className='welcome'>
+                        <h1>Welcome to ToolMate, your ultimate course companion!</h1>
+                        <p>Explore, rank, and share the best software tools for your courses</p>
+                        <h2>Select a course to view details</h2>
+                    </div>
                 )}
             </div>
         </div>

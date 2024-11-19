@@ -6,6 +6,7 @@ div {
 
 p {
     font-family: "JetBrains Mono", monospace;
+    padding: revert;
 }
 body{
     background-color: #e1eedd;
@@ -16,6 +17,7 @@ h3{
 p{
     color: #184733;
 }
+
 .software-tools{
     margin-left: 200px;
     padding-left: 10%;

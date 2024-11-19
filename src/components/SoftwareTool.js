@@ -91,7 +91,7 @@ export default function SoftwareTool (props) {
                     <button onClick={addComment}>Submit</button>
                 </div>
                 <h4>Comments:</h4>
-                <ul>{commentComponentArray}</ul>
+                <ul className="comment-list">{commentComponentArray}</ul>
             </div>
         </div>
     )
