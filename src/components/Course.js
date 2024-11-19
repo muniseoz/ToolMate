@@ -16,7 +16,7 @@ export default function Course(props) {
     const getSoftwareTools = async () => {
         try {
             // Clear previous tools when a new course is selected
-            setSoftwareTools([]);
+            //setSoftwareTools([]); // note: this line is not needed, as when new course is selected it will automatically change
 
             // Get the course document that matches the `name` prop
             const thisCourseSnapshot = await getDocs(query(collection(db, "courses"), where("name", "==", name)));
@@ -72,12 +72,16 @@ export default function Course(props) {
         <div className='software-tools'>
             <h1>{name}</h1>
             <p>{desc}</p>
-            <CreatePost courseId={id} onPostCreated={refreshTools} />
+            <a className='create-post-link' href='#create-post'>Create a software tool post!</a>
             <div>
                 <h2>Software Tools:</h2>
                 <div className='software-tools-array'>
                     {softwareToolComponentArray}
                 </div>
+            </div>
+            <br/>
+            <div id='create-post'>
+                <CreatePost courseId={id} onPostCreated={refreshTools} />
             </div>
         </div>
     );

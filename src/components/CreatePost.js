@@ -38,12 +38,13 @@ export default function CreatePost({ courseId, onPostCreated }) {
                 placeholder="Tool Name"
                 required
             />
-            <input
+            <textarea
                 className='desc'
                 type="text"
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 placeholder="Description"
+                rows={3}
                 required
             />
             <button type="submit" className='submit-button'>Create Post</button>
