@@ -6,6 +6,7 @@ div {
 
 p {
     font-family: "JetBrains Mono", monospace;
+    padding: revert;
 }
 body{
     background-color: #e1eedd;
