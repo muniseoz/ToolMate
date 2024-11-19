@@ -72,6 +72,7 @@ export default function Course(props) {
         <div className='software-tools'>
             <h1>{name}</h1>
             <p>{desc}</p>
+            <a className='create-post-link' href='#create-post'>Create a software tool post!</a>
             <div>
                 <h2>Software Tools:</h2>
                 <div className='software-tools-array'>
@@ -79,7 +80,9 @@ export default function Course(props) {
                 </div>
             </div>
             <br/>
-            <CreatePost courseId={id} onPostCreated={refreshTools} />
+            <div id='create-post'>
+                <CreatePost courseId={id} onPostCreated={refreshTools} />
+            </div>
         </div>
     );
 }
