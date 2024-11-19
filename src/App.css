@@ -39,8 +39,26 @@
   }
 }
 */
-.select-prompt {
-  margin-left: 200px;
+.welcome {
+  display: flex;
+  flex-direction: column; /* Makes the children stack vertically */
+  align-items: center; /* Centers items horizontally within the column */
+  justify-content: center; /* Centers items vertically within the parent */
+  margin-left: 200px; /* Adjust as needed */
   text-align: center;
   color: #184733;
+  height: 100vh; /* Optional: Ensures it takes the full viewport height */
+  font-size: larger;
+  background-image: radial-gradient(#fffaea 40% ,#e1eedd 60%);
+  box-shadow: #184733;
+}
+.welcome h1, p{
+  margin: 0px;
+  padding: 40px;
+}
+.welcome h2{
+  margin: 0px;
+  padding: 30px;
+  background-color: #fffaea;
+  border-radius: 20px;
 }
