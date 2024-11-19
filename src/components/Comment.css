@@ -1,0 +1,46 @@
+.comment-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+
+.replies {
+    color: #F0A04B;
+    font-weight: 500;
+}
+
+.comment img {
+    max-width: 500px;
+    max-height: 200px;
+}
+
+.reply-button {
+    background-color: #EBF8E7;
+    font-weight: 600;
+    height: 35px;
+    border-radius: 10px;
+    margin-left: 10px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.comment-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.comment-textarea {
+    width: 90%
+}
+
+.create-reply button {
+    background-color: #F0A04B;
+    color: white;
+    font-weight: 600;
+    height: 35px;
+    border-radius: 10px;
+    margin-left: 10px;
+    font-family: 'Inter', sans-serif;
+}

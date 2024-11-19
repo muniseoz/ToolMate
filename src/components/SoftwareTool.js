@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Markdown from 'react-markdown'
 
 import Comment from "./Comment";
 import Ranking from "./Ranking";
@@ -74,22 +75,22 @@ export default function SoftwareTool (props) {
     return (
         <div>
             <h3>{name}</h3>
-            <p>{desc}</p>
+            <Markdown className='software-tool-desc'>{desc}</Markdown>
             <p>Upvotes: {upvotes}</p>
 
             <Ranking id={id} path={path} name={name} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
             <div>
-                <h4>Comments:</h4>
-                <div className="create-comment">
-                <textarea
-                    placeholder="Write a comment..."
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    rows={3}
-                    className="comment-textarea"
-                />
-                <button onClick={addComment}>Submit</button>
+                <div style={{marginTop: '15px'}} className="create-comment">
+                    <textarea
+                        placeholder="Write a comment..."
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        rows={3}
+                        className="comment-textarea"
+                    />
+                    <button onClick={addComment}>Submit</button>
                 </div>
+                <h4>Comments:</h4>
                 <ul>{commentComponentArray}</ul>
             </div>
         </div>

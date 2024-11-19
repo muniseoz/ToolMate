@@ -31,7 +31,7 @@ p{
     color: #F0A04B;
 }
 .software-tool-element p {
-    overflow: scroll;
+    overflow: auto;
 }
 button.increment-button{
     border-radius: 5px;
@@ -58,4 +58,8 @@ button.increment-button{
 ul {
     list-style-type: none;
     padding: 0%;
+}
+
+.create-post-link {
+    color: #F0A04B
 }
