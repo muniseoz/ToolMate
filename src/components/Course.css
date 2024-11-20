@@ -70,3 +70,10 @@ ul {
 .tip {
     font-size: 14px;
 }
+
+.software-tool-desc ul, .comment ul{
+    list-style-type: disc;
+    font-family: 'JetBrains Mono', monospace;
+    margin-left: 25px;
+    color: #184733;
+}
