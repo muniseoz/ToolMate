@@ -64,7 +64,21 @@ ul {
 }
 
 .create-post-link {
-    color: #F0A04B
+    color: #F0A04B;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+    margin-left: 30%;
+    margin-right: 30%;
+    font-size: 20px;
+    background: white;
+    border-radius: 10px;
+    border: #184733;
+    border-style: solid;
+}
+.create-post-link:hover{
+    color: white;
+    background-color: #F0A04B;
 }
 
 .tip {
