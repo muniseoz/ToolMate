@@ -53,6 +53,7 @@ button.increment-button{
     height: 40px;
     border-radius: 10px;
     margin-left: 10px;
+    font-family: 'Inter', sans-serif;
 }
 .comment-textarea{
     width: 100%;
@@ -64,4 +65,8 @@ ul {
 
 .create-post-link {
     color: #F0A04B
+}
+
+.tip {
+    font-size: 14px;
 }

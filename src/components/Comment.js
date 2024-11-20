@@ -95,6 +95,7 @@ export default function Comment (props) {
             
             { showCreateReply &&
             <div className="create-reply">
+                <Markdown className='tip'>*Replies can be formatted using [Markdown](https://www.markdownguide.org/cheat-sheet/)! Feel free to add links and images if helpful.*</Markdown>
                 <textarea
                     placeholder="Write a reply..."
                     value={newComment}
@@ -107,7 +108,7 @@ export default function Comment (props) {
             }
             {replies.length !== 0 && 
             <>
-                <p><a className="replies" href="" onClick={(e) => {e.preventDefault(); setShowReplies((prev) => !prev)}}>Replies{showReplies ? ':' : '(V)'}</a></p>
+                <p><a className="replies" href="" onClick={(e) => {e.preventDefault(); setShowReplies((prev) => !prev)}}>Replies{showReplies ? ':' : ` (${replies.length})`}</a></p>
                 {showReplies &&
                 <div style={{marginLeft: "25px"}}>
                     {commentComponentArray}

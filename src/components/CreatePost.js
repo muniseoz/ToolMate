@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { db } from '../config/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import './CreatePost.css';
+import Markdown from 'react-markdown';
 
 export default function CreatePost({ courseId, onPostCreated }) {
     const [name, setName] = useState('');
@@ -38,6 +39,7 @@ export default function CreatePost({ courseId, onPostCreated }) {
                 placeholder="Tool Name"
                 required
             />
+            <Markdown>Descriptions can be formatted using [Markdown](https://www.markdownguide.org/cheat-sheet/)! Feel free to add links and images if helpful.</Markdown>
             <textarea
                 className='desc'
                 type="text"

@@ -80,6 +80,7 @@ export default function SoftwareTool (props) {
 
             <Ranking id={id} path={path} name={name} upvotes={upvotes} onUpdateUpvotes={onUpdateUpvotes} />
             <div>
+            <Markdown className='tip'>*Comments are formatted using [Markdown](https://www.markdownguide.org/cheat-sheet/)! Feel free to add links and images if helpful.*</Markdown>
                 <div style={{marginTop: '15px'}} className="create-comment">
                     <textarea
                         placeholder="Write a comment..."

@@ -52,7 +52,7 @@
   background-image: radial-gradient(#fffaea 40% ,#e1eedd 60%);
   box-shadow: #184733;
 }
-.welcome h1, p{
+.welcome h1, .welcome p{
   margin: 0px;
   padding: 40px;
 }
