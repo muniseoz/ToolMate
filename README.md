@@ -1,6 +1,9 @@
 # ToolMate 🔨 - A tool for UTD ECS students
 Live at: https://toolmate-43458.web.app/
 
+![image](https://github.com/user-attachments/assets/bd3c44d5-f6d4-45cc-9542-4633a0752670)
+
+
 > Have you ever had trouble finding the right tool for the job? Outdated syllabus reccommending less than optimal IDEs? Have technical issues that no one in your section knows how to solve?
 
 ToolMate is a tool created for UTD students attending ECS related classes for Computer Science and Software Engineering. It allows students to view, rank, submit, and comment about software tools for classes at UTD. Never again will students be stuck using Eclipse for weeks before their friend tells them about IntelliJ, or be unable to run their code due to software issues. 
